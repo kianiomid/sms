@@ -31,14 +31,14 @@ class KavenegarJson extends BaseJsonStructure
     public function toArray()
     {
         $res = [
-            $this->options[JsonDictionary::MESSAGEID] => JsonDictionary::MESSAGEID . ' = ' . $this->options['messageId'],
-            $this->options[JsonDictionary::MESSAGE] => JsonDictionary::MESSAGE . ' = ' . $this->options['texts'],
-            $this->options[JsonDictionary::STATUS] => JsonDictionary::STATUS . ' = ' . $this->options['status'],
-            $this->options[JsonDictionary::STATUSTEXT] => JsonDictionary::STATUSTEXT . ' = ' . $this->options['statusText'],
-            $this->options[JsonDictionary::SENDER] => JsonDictionary::SENDER . ' = ' . $this->options['sender'],
-            $this->options[JsonDictionary::RECEPTOR] => JsonDictionary::RECEPTOR . ' = ' . $this->options['receptor'],
-            $this->options[JsonDictionary::DATE] => JsonDictionary::DATE . ' = ' . $this->options['date'],
-            $this->options[JsonDictionary::COST] => JsonDictionary::COST . ' = ' . $this->options['cost'],
+            JsonDictionary::MESSAGEID => $this->options['messageid'],
+            JsonDictionary::MESSAGE => $this->options['message'],
+            JsonDictionary::STATUS => $this->options['status'],
+            JsonDictionary::STATUSTEXT => $this->options['statustext'],
+            JsonDictionary::SENDER => $this->options['sender'],
+            JsonDictionary::RECEPTOR => $this->options['receptor'],
+            JsonDictionary::DATE => $this->options['date'],
+            JsonDictionary::COST => $this->options['cost'],
         ];
 
         return $res;

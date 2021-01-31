@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'fa',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fa',
 
     /*
     |--------------------------------------------------------------------------
@@ -126,10 +126,12 @@ return [
     //kavenegar sender
     'API_KEY'          => env('API_KEY'),
     'KAVEKNEGAR_SENDER'          => env('KAVEKNEGAR_SENDER'),
+    'SMS_PROVIDER'          => env('SMS_PROVIDER', 'kavenegar'),
 
     //mellipayamak config
     'MELLIPAYAMAK_USER_NAME' => env('MELLIPAYAMAK_USER_NAME'),
     'MELLIPAYAMAK_PASSWORD' => env('MELLIPAYAMAK_PASSWORD'),
+    'MELLIPAYAMAK_SENDER' => env('MELLIPAYAMAK_SENDER'),
 
 
    /* 'SMS_HOST'          => env('SMS_HOST'),
