@@ -36,16 +36,19 @@ class KavenegarSmsPanel implements SmsInterface
         return self::$instance;
     }
 
-    public function sendSms()
+    public function sendSms($to, $from, $message)
     {
         try {
 //            $api = new \Kavenegar\KavenegarApi( "API Key" );
             $api = new KavenegarApi($this->apiKey);
-            $sender = $this->sender;
-            $message = Lang::get('texts.kavenegar.sms_service');
+//            $sender = $this->sender;
+            $from = $this->sender;
+
+//            $message = Lang::get('texts.kavenegar.sms_service');
             $receptor = ["09331116877", "09367891011"];
 
-            $result = $api->Send($sender, $receptor, $message);
+//            $result = $api->Send($sender, $receptor, $message);
+            $result = $api->Send($from, $to, $message);
 
             if ($result) {
                 foreach ($result as $r) {
@@ -60,7 +63,7 @@ class KavenegarSmsPanel implements SmsInterface
 
                     $options = [
                         $messageId = $r->messageid,
-                        $message = $r->message,
+                        $texts = $r->message,
                         $status = $r->status,
                         $statusText = $r->statustext,
                         $sender = $r->sender,

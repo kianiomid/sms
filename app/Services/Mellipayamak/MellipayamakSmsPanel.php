@@ -6,6 +6,7 @@ namespace App\Services\Mellipayamak;
 
 use App\Services\SmsInterface;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Lang;
 
 class MellipayamakSmsPanel implements SmsInterface
 {
@@ -14,7 +15,7 @@ class MellipayamakSmsPanel implements SmsInterface
     public $sender;
     protected static $instance;
 
-//    use Melipayamak;
+    use Melipayamak;
 
     public function __construct($apiKey)
     {
@@ -33,18 +34,23 @@ class MellipayamakSmsPanel implements SmsInterface
         return self::$instance;
     }
 
-    public function sendSms()
+    public function sendSms($to, $from, $text)
     {
         try{
 
             $sms = Melipayamak::sms();
-            $to = '09123456789';
-            $from = '5000...';
-            $text = 'تست وب سرویس ملی پیامک';
+
+            //bayad az biroun pass bedim
+//            $to = '09331116877';
+//            $from = '5000...';
+//            $text = Lang::get('texts.mellipayamak.sms_service');
+
             $response = $sms->send($to,$from,$text);
+
             $json = json_decode($response);
-            echo $json->Value; //RecId or Error Number
-        }catch(Exception $e){
+            return $json->Value; //RecId or Error Number
+
+        }catch(\Exception $e){
             echo $e->getMessage();
         }
     }

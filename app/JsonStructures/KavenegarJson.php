@@ -32,7 +32,7 @@ class KavenegarJson extends BaseJsonStructure
     {
         $res = [
             $this->options[JsonDictionary::MESSAGEID] => JsonDictionary::MESSAGEID . ' = ' . $this->options['messageId'],
-            $this->options[JsonDictionary::MESSAGE] => JsonDictionary::MESSAGE . ' = ' . $this->options['message'],
+            $this->options[JsonDictionary::MESSAGE] => JsonDictionary::MESSAGE . ' = ' . $this->options['texts'],
             $this->options[JsonDictionary::STATUS] => JsonDictionary::STATUS . ' = ' . $this->options['status'],
             $this->options[JsonDictionary::STATUSTEXT] => JsonDictionary::STATUSTEXT . ' = ' . $this->options['statusText'],
             $this->options[JsonDictionary::SENDER] => JsonDictionary::SENDER . ' = ' . $this->options['sender'],

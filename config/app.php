@@ -188,6 +188,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // sms services
+        Melipayamak\Laravel\ServiceProvider::class,
+
     ],
 
     /*
@@ -239,6 +242,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        //sms services
+        Melipayamak\Laravel\Facade::class,
 
     ],
 
