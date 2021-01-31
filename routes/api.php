@@ -26,6 +26,6 @@ Route::group([
 ], function ($router) {
 
     $router->group(['prefix' => 'sms'], function ($router){
-        $router->get('/send', [SmsController::class, 'send']);
+        $router->post('/send', [SmsController::class, 'send']);
     });
 });
