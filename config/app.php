@@ -193,6 +193,7 @@ return [
         // sms services
         Melipayamak\Laravel\ServiceProvider::class,
 
+        App\Providers\SmsServiceProvider::class
     ],
 
     /*
