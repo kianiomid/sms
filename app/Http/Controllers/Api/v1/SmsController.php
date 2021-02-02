@@ -11,30 +11,28 @@ use Illuminate\Support\Facades\Lang;
 class SmsController extends Controller
 {
 
-    protected $smsEntityManager;
-
-    const KAVENEGAR = "kavenegar";
-    const MELLIPAYAMAK = "mellipayamak";
+    protected $sms;
 
     /**
      * AppBaseController constructor.
+     * @param SmsInterface $smsInterface
      */
-    public function __construct()
+    public function __construct(SmsInterface $smsInterface)
     {
-        $this->smsEntityManager = Config::get('app.SMS_PROVIDER', self::KAVENEGAR);
+        $this->sms = $smsInterface;
+//        $this->smsEntityManager = Config::get('app.SMS_PROVIDER', self::KAVENEGAR);
     }
 
     /**
-     * @param SmsInterface $smsInterface
      * @return \Illuminate\Http\Response
      */
-    public function send(SmsInterface $smsInterface)
+    public function send()
     {
         //we should get data from database but this section we set data as static
         $receptor = ["09331116877"];
         $message = Lang::get('texts.kavenegar.sms_service');
 
-        $smsInfo = $smsInterface->sendSms($receptor, $message, $this->smsEntityManager);
+        $smsInfo = $this->sms->sendSms($receptor, $message);
 
         return JsonResponse::response($smsInfo, Lang::get('response.general.success'));
     }

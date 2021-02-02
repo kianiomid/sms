@@ -2,13 +2,19 @@
 
 namespace App\Providers;
 
-use App\Services\SMS\Kavenegar\KavenegarSmsPanel;
-use App\Services\SMS\Mellipayamak\MellipayamakSmsPanel;
+use App\Http\Controllers\Api\v1\SmsController;
 use App\Services\SMS\SmsInterface;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SmsServiceProvider extends ServiceProvider
 {
+
+    const KAVENEGAR = "kavenegar";
+
+    protected $smsEntity;
+
     /**
      * Register services.
      *
@@ -16,13 +22,23 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(SmsInterface::class, function ($app) {
-            return new MellipayamakSmsPanel($app);
-        });
 
-        $this->app->bind(SmsInterface::class, function ($app) {
-            return new KavenegarSmsPanel($app);
-        });
+        $smsProvider = Config::get('app.SMS_PROVIDER', self::KAVENEGAR);
+
+        $this->app->when(SmsController::class)
+            ->needs(SmsInterface::class)
+            ->give(function () use ($smsProvider) {
+
+                $smsEntityManager = ucfirst($smsProvider);
+
+                $className = 'App\Services\SMS\\' . $smsEntityManager . '\\' . $smsEntityManager . 'SmsPanel';
+
+                if (class_exists($className)) {
+                    return new $className;
+                }
+
+                throw new NotFoundHttpException();
+            });
     }
 
     /**

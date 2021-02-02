@@ -21,36 +21,32 @@ class MellipayamakSmsPanel implements SmsInterface
      * MellipayamakSmsPanel constructor.
      * @param $app
      */
-    public function __construct($app)
+    public function __construct()
     {
         //I don't access to mellipayamak panel, finally we set mellipayamak properties here,
         //like SMS_HOST or SMS_API_KEY and ...
 
-        $this->app = $app;
         $this->sender = Config::get('app.MELLIPAYAMAK_SENDER');
     }
 
     /**
      * @param $to
      * @param $text
-     * @param $smsEntityManager
      * @return mixed
      */
-    public function sendSms($to, $text, $smsEntityManager)
+    public function sendSms($to, $text)
     {
-        if ($this->app->config['app']['SMS_PROVIDER'] == $smsEntityManager) {
 
-            try {
-                $sms = Melipayamak::sms();
+        try {
+            $sms = Melipayamak::sms();
 
-                $response = $sms->send($to, $this->sender, $text);
+            $response = $sms->send($to, $this->sender, $text);
 
-                $json = json_decode($response);
-                return $json->Value; //RecId or Error Number
+            $json = json_decode($response);
+            return $json->Value; //RecId or Error Number
 
-            } catch (\Exception $e) {
-                echo $e->getMessage();
-            }
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
     }
 

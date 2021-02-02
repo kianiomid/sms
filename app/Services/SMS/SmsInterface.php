@@ -5,5 +5,5 @@ namespace App\Services\SMS;
 
 interface SmsInterface
 {
-    public function sendSms($to, $text, $smsEntityManager);
+    public function sendSms($to, $text);
 }

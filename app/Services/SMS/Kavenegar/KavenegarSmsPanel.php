@@ -26,54 +26,51 @@ class KavenegarSmsPanel implements SmsInterface
      * KavenegarSmsPanel constructor.
      * @param $app
      */
-    public function __construct($app)
+    public function __construct()
     {
-        $this->app = $app;
+//        $this->app = $app;
         $this->apiKey = Config::get('app.API_KEY');
         $this->sender = Config::get('app.KAVEKNEGAR_SENDER');
     }
 
     /**
      * @param $to
-     * @param $message
-     * @param $smsEntityManager
+     * @param $text
      * @return \Illuminate\Http\Response|mixed
      */
-    public function sendSms($to, $message, $smsEntityManager)
+    public function sendSms($to, $text)
     {
 
-        if ($this->app->config['app']['SMS_PROVIDER'] == $smsEntityManager) {
-            try {
-                $api = new KavenegarApi($this->apiKey);
+        try {
+            $api = new KavenegarApi($this->apiKey);
 
-                $result = $api->Send($this->sender, $to, $message);
+            $result = $api->Send($this->sender, $to, $text);
 
-                if ($result) {
-                    foreach ($result as $r) {
-                        $options = [
-                            JsonDictionary::MESSAGEID => $r->messageid,
-                            JsonDictionary::MESSAGE => $r->message,
-                            JsonDictionary::STATUS => $r->status,
-                            JsonDictionary::STATUSTEXT => $r->statustext,
-                            JsonDictionary::SENDER => $r->sender,
-                            JsonDictionary::RECEPTOR => $r->receptor,
-                            JsonDictionary::DATE => $r->date,
-                            JsonDictionary::COST => $r->cost
-                        ];
+            if ($result) {
+                foreach ($result as $r) {
+                    $options = [
+                        JsonDictionary::MESSAGEID => $r->messageid,
+                        JsonDictionary::MESSAGE => $r->message,
+                        JsonDictionary::STATUS => $r->status,
+                        JsonDictionary::STATUSTEXT => $r->statustext,
+                        JsonDictionary::SENDER => $r->sender,
+                        JsonDictionary::RECEPTOR => $r->receptor,
+                        JsonDictionary::DATE => $r->date,
+                        JsonDictionary::COST => $r->cost
+                    ];
 
-                        $jsonObject = (new KavenegarJson($options))->toArray();
+                    $jsonObject = (new KavenegarJson($options))->toArray();
 
-                        return JsonResponse::response($jsonObject, Lang::get('response.general.success'));
-                    }
+                    return JsonResponse::response($jsonObject, Lang::get('response.general.success'));
                 }
-
-            } catch (\Kavenegar\Exceptions\ApiException $e) {
-                //This error occurs if the output of the web service is not 200
-                echo $e->errorMessage();
-            } catch (\Kavenegar\Exceptions\HttpException $e) {
-                // This error occurs when there is a problem communicating with the web service
-                echo $e->errorMessage();
             }
+
+        } catch (\Kavenegar\Exceptions\ApiException $e) {
+            //This error occurs if the output of the web service is not 200
+            echo $e->errorMessage();
+        } catch (\Kavenegar\Exceptions\HttpException $e) {
+            // This error occurs when there is a problem communicating with the web service
+            echo $e->errorMessage();
         }
 
     }
